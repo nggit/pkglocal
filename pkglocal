@@ -1,0 +1,21 @@
+#!/bin/sh
+# pkglocal - A simple but powerful tool which can display local packages very fast.
+#
+# Copyright (c) 2020 nggit.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+
+for PORT in $( grep -i '^\s*prtdir' /etc/prt-get.conf | sed 's/prtdir//i; s/\s//g' ); do
+    PORTS="$PORTS $PORT"
+    STR="$STR [ -d $PORT/\$PKG ] ||"
+done
+
+echo "The following packages are not in ($PORTS ):"
+
+eval "for PKG in \$( prt-get listinst ); do$STR printf '%d. %s\n' \$(( i += 1 )) \$PKG; done"
+
+[ ${i:-0} -gt 0 ] || echo "No local packages were found!"
