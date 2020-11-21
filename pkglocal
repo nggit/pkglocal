@@ -18,4 +18,4 @@ echo "The following packages are not in ($PORTS ):"
 
 eval "for PKG in \$( prt-get listinst ); do$STR printf '%d. %s\n' \$(( i += 1 )) \$PKG; done"
 
-[ ${i:-0} -gt 0 ] || echo "No local packages were found!"
+[ "${i:-0}" -gt 0 ] || echo "No local packages were found!"
