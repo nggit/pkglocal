@@ -8,6 +8,9 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 #
+PORTS=
+STR=
+i=0
 
 for PORT in $( grep -i '^\s*prtdir' /etc/prt-get.conf | sed 's/prtdir//i; s/\s//g' ); do
     PORTS="$PORTS $PORT"
@@ -18,4 +21,4 @@ echo "The following packages are not in ($PORTS ):"
 
 eval "for PKG in \$( prt-get listinst ); do$STR printf '%d. %s\n' \$(( i += 1 )) \$PKG; done"
 
-[ "${i:-0}" -gt 0 ] || echo "No local packages were found!"
+[ $i -gt 0 ] || echo "No local packages were found!"
